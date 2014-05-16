@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang='de'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Twitter SocialGraph</title>
+    <link rel='stylesheet' src='impress.css'>
+    <style>
+      body {
+        background-color:#D7D7D7;
+        background-image:radial-gradient(#F0F0F0,#BEBEBE);
+      }
+      
+      h1 {
+        font-size:12rem;
+        text-align:center;
+      }
+      
+      h2 {
+        font-size:10rem;
+        text-align:center;
+      }
+      
+      .upcase {
+        text-transform:uppercase;
+      }
+      
+      .fallback-message {
+        display:none; /* Remove this later */
+      }
+      
+      .substep {
+        transition: opacity 1s ease 0s;
+      }
+    </style>
+  </head>
+  <body class='impress-not-supported'>
+    <div class='fallback-message'>
+      Leider unterstützt dein Browser nicht die von der Präsentationssoftware
+      benötigten Funktionen. Bitte benutze einen modernen Browser wie Firefox,
+      Chrome oder Safari. Danke.
+    </div>
+    <div id='impress'>
+      <div class='step slide' data-x='0' data-y='-1500' id='social-graph'>
+        <h1 class='upcase'>Social Graph</h1>
+      </div>
+      <div class='step' data-x='1500' data-y='-1500' id='first-though'>
+        <img alt='Wikipedia Concept Map' src='concept-map.jpg' width='800px'>
+      </div>
+      <div class='step' data-x='1500' data-y='-500' id='diaspora'>
+        <img alt='Diaspora* Logo' src='diaspora.png' width='800px'>
+      </div>
+      <div class='step' data-x='3000' data-y='-1500' id='eh14'>
+        <img alt='Logo EasterHegg 2014' src='eh14.svg'>
+      </div>
+      <div class='step' data-x='3000' data-y='-500' id='eh14-decentralisation'>
+        <h1>Decentralisation:</h1>
+        <h2>Broken by Design!</h2>
+      </div>
+      <div class='step' data-x='4500' data-y='-1500' id='xing-reach'>
+        <img alt='Xing Reichweite Hintergrundbild' src='Xing-contact-reach.png' width='800px'>
+        <img alt='Xing Reichweite konkret' class='substep' src='Xing-contact-reach-numbers.png'>
+      </div>
+      <div class='step' id='xing-reach-number'>
+        <img alt='Twitter-Analytics Menüpunkt' src='Twitter-Analytics.png'>
+      </div>
+      <div class='step' id='techniques'>
+        <ol>
+          <li>
+            Haml
+          </li>
+          <li>
+            Impress.js
+          </li>
+          <li>
+            CSV.js
+          </li>
+          <li>
+            D3.js
+          </li>
+        </ol>
+      </div>
+      <div class='step' id='credits'>
+        <ul>
+          <li>
+            EasterHegg Logo:
+            <a href='http://eh14.easterhegg.eu/' target='_blank'>http://eh14.easterhegg.eu/</a>
+          </li>
+        </ul>
+      </div>
+      <div class='step' id='cheers'>
+        <img alt='Prost!' src='cheers.jpg' width='600px'>
+      </div>
+    </div>
+    <script src='csv.js'></script>
+    <script src='impress.js'></script>
+    <script>impress().init();</script>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+!!! 5
+%html{lang:'de'}
+  %head
+    %meta{charset:'utf-8'}
+    %title Twitter SocialGraph
+    %link{rel:'stylesheet',src:'impress.css'}
+    :css
+      body {
+        background-color:#D7D7D7;
+        background-image:radial-gradient(#F0F0F0,#BEBEBE);
+      }
+
+      h1 {
+        font-size:12rem;
+        text-align:center;
+      }
+
+      h2 {
+        font-size:10rem;
+        text-align:center;
+      }
+
+      .upcase {
+        text-transform:uppercase;
+      }
+
+      .fallback-message {
+        display:none; /* Remove this later */
+      }
+
+      .substep {
+         transition: opacity 1s ease 0s;
+      }
+  %body.impress-not-supported
+    .fallback-message
+      Leider unterstützt dein Browser nicht die von der Präsentationssoftware
+      benötigten Funktionen. Bitte benutze einen modernen Browser wie Firefox,
+      Chrome oder Safari. Danke.
+    #impress
+      #social-graph.step.slide{data:{x:'0',y:'-1500'}}
+        %h1.upcase Social Graph
+      #first-though.step{data:{x:'1500',y:'-1500'}}
+        %img{src:'concept-map.jpg',alt:'Wikipedia Concept Map',width:'800px'}
+      #diaspora.step{data:{x:'1500',y:'-500'}}
+        %img{src:'diaspora.png',alt:'Diaspora* Logo',width:'800px'}
+      #eh14.step{data:{x:'3000',y:'-1500'}}
+        %img{src:'eh14.svg',alt:'Logo EasterHegg 2014'}
+      #eh14-decentralisation.step{data:{x:'3000',y:'-500'}}
+        %h1 Decentralisation:
+        %h2 Broken by Design!
+      #xing-reach.step{data:{x:'4500',y:'-1500'}}
+        %img{src:'Xing-contact-reach.png',alt:'Xing Reichweite Hintergrundbild',width:'800px'}
+        %img.substep{src:'Xing-contact-reach-numbers.png',alt:'Xing Reichweite konkret'}
+      #xing-reach-number.step
+        %img{src:'Twitter-Analytics.png',alt:'Twitter-Analytics Menüpunkt'}
+      #techniques.step
+        %ol
+          %li
+            Haml
+          %li
+            Impress.js
+          %li
+            CSV.js
+          %li
+            D3.js
+      #credits.step
+        %ul
+          %li
+            EasterHegg Logo:
+            %a{href:'http://eh14.easterhegg.eu/',target:'_blank'}http://eh14.easterhegg.eu/
+      #cheers.step
+        %img{src:'cheers.jpg',alt:'Prost!',width:'600px'}
+    %script{src:'csv.js'}
+    %script{src:'impress.js'}
+    %script impress().init();
