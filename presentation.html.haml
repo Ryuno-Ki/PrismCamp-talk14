@@ -10,26 +10,65 @@
         background-image:radial-gradient(#F0F0F0,#BEBEBE);
       }
 
+      h1,h2,h3,h4,h5,h6 {
+        text-align:center;
+      }
+
       h1 {
         font-size:12rem;
-        text-align:center;
       }
 
       h2 {
         font-size:10rem;
-        text-align:center;
+      }
+
+      h3 {
+        font-size:8rem;
+      }
+
+      h4 {
+        font-size:6rem;
+      }
+
+      h5 {
+        font-size:4rem;
+      }
+
+      h6 {
+        font-size:2rem;
+      }
+
+      ul {
+        list-style:none;
+      }
+
+      li,li * {
+        font-size:3rem;
       }
 
       .upcase {
         text-transform:uppercase;
+      }
+      
+      .centered {
+        display:block;
+        margin:1rem auto;
+      }
+
+      .step {
+        width:80rem;
       }
 
       .fallback-message {
         display:none; /* Remove this later */
       }
 
-      .substep {
-         transition: opacity 1s ease 0s;
+      .substep.present {
+        visibility:visible;
+      }
+
+      .substep.past, .substep.future {
+        visibility:hidden;
       }
   %body.impress-not-supported
     .fallback-message
@@ -49,27 +88,71 @@
         %h1 Decentralisation:
         %h2 Broken by Design!
       #xing-reach.step{data:{x:'4500',y:'-1500'}}
-        %img{src:'Xing-contact-reach.png',alt:'Xing Reichweite Hintergrundbild',width:'800px'}
-        %img.substep{src:'Xing-contact-reach-numbers.png',alt:'Xing Reichweite konkret'}
-      #xing-reach-number.step
+        .substep
+          %img{src:'Xing-contact-reach.png',alt:'Xing Reichweite Hintergrundbild',width:'800px'}
+        .substep
+          %img{src:'Xing-contact-reach-numbers.png',alt:'Xing Reichweite konkret',width:'800px'}
+      #twitter-analytics.step{data:{x:'6000',y:'-1500'}}
         %img{src:'Twitter-Analytics.png',alt:'Twitter-Analytics Menüpunkt'}
-      #techniques.step
+        %img{src:'Twitter-Analytics-Download.png',alt:'Twitter-Analytics zum Download'}
+      #twitter-input.step{data:{x:'6000',y:'-500'}}
+        .substep
+          %h3 Let's see, what Twitter has to offer
+          %input#file-handler{type:'file'}Hochladen
+        .substep
+          %table#file-output
+      #techniques.step{data:{x:'7500',y:'-1500'}}
         %ol
           %li
-            Haml
+            %img{src:'Badges/haml.png',alt:'Haml'}
           %li
-            Impress.js
+            %a{href:'https://github.com/bartaz/impress.js',target:'_blank'}Impress.js
+            von
+            %a{href:'https://github.com/bartaz',target:'_blank'}Bartek Szopka
           %li
-            CSV.js
+            %a{href:'https://github.com/gkindel/CSV-JS',target:'_blank'}CSV-JS
+            von
+            %a{href:'https://github.com/gkindel',target:'_blank'}Greg Kindel
           %li
-            D3.js
-      #credits.step
+            %img{src:'Badges/d3.svg',alt:'D3.js'}
+      #credits.step{data:{x:'0',y:'-5000'}}
         %ul
+          %li
+            %img{src:'CC-Badges/cc-by-20.png',alt:'CC-BY 2.0'}
+            %a{href:'https://www.flickr.com/photos/juhansonin/407874864/'}Wikipedia Concept Map
+            von
+            %a{href:'https://secure.flickr.com/photos/juhansonin/',target:'_blank'}Juhan Sonin
+          %li
+            %img{src:'CC-Badges/cc-by-nc-nd-20.png',alt:'CC-BY-NC-ND 2.0'}
+            %a{href:'https://www.flickr.com/photos/uggl-y/7720672834/',target:'_blank'}Ornate Typo Diaspora
+            von
+            %a{href:'https://www.flickr.com/photos/uggl-y/',target:'_blank'}United Geekdom of GNU/Linux
           %li
             EasterHegg Logo:
             %a{href:'http://eh14.easterhegg.eu/',target:'_blank'}http://eh14.easterhegg.eu/
+          %li
+            Xing Reichweite: Bildschirmphotos
+          %li
+            Twitter Analytics: Bildschirmphotos
+          %li
+            %img{src:'CC-Badges/cc-by-nc-sa-20.png',alt:'CC-BY-NC-SA 2.0'}
+            %a{href:'https://www.flickr.com/photos/jackie_brand/11630176306/',target:'_blank'}Cheers!
+            von
+            %a{href:'https://secure.flickr.com/photos/jackie_brand/',target:'_blank'}Jeremy Meredith
       #cheers.step
-        %img{src:'cheers.jpg',alt:'Prost!',width:'600px'}
+        %h3 BarTaz meint, wer seine Software nutzt, dem gibt er einen aus.
+        %h4 In diesem Sinne: Cheers!
+        %img{src:'cheers.jpg',alt:'Prost!',width:'300px'}
+      #github.step{data:{x:'10000',y:'-1500'}}
+        %h5
+          %img{src:'GitHub-Mark/PNG/GitHub-Mark-64px.png',alt:'Code auf GitHub'}
+          %a{href:'https://github.com/Ryuno-Ki/PrismCamp-talk14.git',target:'_blank'}
+            https://github.com/<br />
+            Ryuno-Ki/PrismCamp-talk14.git
+        %img.centered{src:'PrismCamp-Talk.png',alt:'https://github.com/Ryuno-Ki/PrismCamp-talk14.git',width:'400px'}
+      #overview.step
     %script{src:'csv.js'}
+    %script{src:'d3.min.js'}
     %script{src:'impress.js'}
     %script impress().init();
+    %script{src:'fileManager.js'}
