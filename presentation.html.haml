@@ -97,12 +97,14 @@
         %img{src:'Twitter-Analytics-Download.png',alt:'Twitter-Analytics zum Download'}
       #twitter-input.step{data:{x:'6000',y:'-500'}}
         .substep
-          %h3 Let's see, what Twitter has to offer
-          %input#file-handler{type:'file'}Hochladen
-        .substep
-          %table#file-output
+          %h3 Und was hat Twitter zu bieten?
+          %input#file-handler{type:'file'}
+      #twitter-output.step{data:{x:'6000',y:'500'}}
+        %table#file-output
+        #file-viz
       #techniques.step{data:{x:'7500',y:'-1500'}}
-        %ol
+        %h5 Benutzte Bibliotheken
+        %ul
           %li
             %img{src:'Badges/haml.png',alt:'Haml'}
           %li
@@ -116,6 +118,7 @@
           %li
             %img{src:'Badges/d3.svg',alt:'D3.js'}
       #credits.step{data:{x:'0',y:'-5000'}}
+        %h5 Credits
         %ul
           %li
             %img{src:'CC-Badges/cc-by-20.png',alt:'CC-BY 2.0'}
@@ -140,9 +143,9 @@
             von
             %a{href:'https://secure.flickr.com/photos/jackie_brand/',target:'_blank'}Jeremy Meredith
       #cheers.step
-        %h3 BarTaz meint, wer seine Software nutzt, dem gibt er einen aus.
-        %h4 In diesem Sinne: Cheers!
-        %img{src:'cheers.jpg',alt:'Prost!',width:'300px'}
+        %h4 BarTaz meint, wer seine Software nutzt, dem gibt er einen aus.
+        %img{src:'cheers.jpg',alt:'Prost!',width:'300px',style:'display:block;float:left;margin-top:-14rem;'}
+        %h5 In diesem Sinne: Cheers!
       #github.step{data:{x:'10000',y:'-1500'}}
         %h5
           %img{src:'GitHub-Mark/PNG/GitHub-Mark-64px.png',alt:'Code auf GitHub'}
