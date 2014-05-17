@@ -1,5 +1,5 @@
 // TODO: Sanity checks
-// http://www.html5rocks.com/en/tutorials/file/dndfiles/
+// http://www.htmlrocks.com/en/tutorials/file/dndfiles/
 Array.prototype.unique = function() {
     var a = this.concat();
     for(var i=0; i<a.length; ++i) {
@@ -38,59 +38,53 @@ function handleFileSelect(e) {
 								var commonKeys  = usersKeys.concat(retwKeys).unique();
 								var uniqueUsers = commonKeys.diff(usersKeys);
 								var uniqueRetw  = commonKeys.diff(retwKeys);
-								var abstract = document.getElementById('file-viz');
-								abstract.innerHTML = '<h5>Mit ' + usersKeys.length
-																	 + ' Benutzern kommunziert, davon waren '
-																	 + uniqueUsers.length + ' einmalig.</h5>\n';
-								abstract.innerHTML += '<h5>' + retwKeys.length 
-												           + ' Benutzer retweetet, davon waren ' 
-																	 + uniqueRetw.length + ' einmalig.</h5>\n';
 								csv2svg();
 				}
 };
 
 function csv2svg() {
-	var width    = 500;
-	var height   = 500;
 	var treshold = 30;
 	d3.text('tweets/tweets.csv', function(raw) {
 		var data   = d3.csv.parseRows(raw);
+
+		var canvas = prepareCanvas();
 		var users  = [];
-		var retw   = [];
 		users['Sonstiges'] = 0;
-		retw['Sonstiges']  = 0;
-		var canvas = d3.select('#twitter-output').append('svg')
-																						 .attr('width', width)
-																						 .attr('height', height);
-		canvas.append('rect').attr('class', 'background')
-												 .attr('width', width)
-												 .attr('height', height);
-		canvas.append('g').attr('class', 'x axis');
-		canvas.append('g').attr('class', 'y axis').append('line').attr('y1','100%');
-	
-		var calledData = canvas.selectAll('rect').data(data).enter();
 		for (var row = 1; row < data.length; ++row) {
 			var reply2user  = data[row][2];
-			var timestamp   = data[row][3];
-			var retweetUser = data[row][7];
 			users = sumUpTweets(users, reply2user);
-			retw  = sumUpTweets(retw, retweetUser);
 		}
 		delete users[""];
-		delete retw[""];
 
 		users = truncateTweets(users, treshold);
-		retw = truncateTweets(retw, treshold);
-		console.log(users);
-		console.log(retw);
-		var viz = document.getElementById('file-viz');
-		viz.innerHTML = users['Max'].key + ' mit einem Wert von ' + users['Max'].val;
-		calledData.append('rect').attr('y', function(d, i) {
-			// i = line, d = data
-			var keys = Object.keys(users);
-			return 20;
-		})
+		visualize(canvas, users);
+
+	  var canvas = prepareCanvas();
+		var retw   = [];
+		retw['Sonstiges']  = 0;
+		for (var row = 1; row < data.length; ++row) {
+			var retweetUser = data[row][7];
+			retw  = sumUpTweets(retw, retweetUser);
+		}
+		delete retw[""];
+
+		retw  = truncateTweets(retw, treshold);
+		visualize(canvas, retw);
 	});
+};
+
+function prepareCanvas() {
+	var width    = 600;
+	var height   = 600;
+	var canvas = d3.select('#twitter-output').append('svg')
+																					 .attr('width', width)
+																					 .attr('height', height);
+	canvas.append('rect').attr('class', 'background')
+											 .attr('width', width)
+											 .attr('height', height);
+	canvas.append('g').attr('class', 'x axis');
+	canvas.append('g').attr('class', 'y axis').append('line')
+	return canvas;
 };
 
 function sumUpTweets(group, people) {
@@ -112,7 +106,7 @@ function truncateTweets(group, treshold) {
 			delete group[twitterId];
 			continue;
 		}
-		if (!isNumeric(twitterId) && group[twitterId] > group['Max'].val) {
+		if (isNumeric(twitterId) && group[twitterId] > group['Max'].val) {
 			group['Max'].key = twitterId;
 			group['Max'].val = group[twitterId];
 		}
@@ -122,4 +116,54 @@ function truncateTweets(group, treshold) {
 
 function isNumeric(obj) {
 	return !isNaN(parseFloat(obj));
+};
+
+function visualize(canvas, group) {
+	var viz           = document.getElementById('file-viz');
+	// Subtract Max, Sonstiges and the monkeypatched functions
+	var keys          = [];
+	var values        = [];
+	var textYPosition = 20;
+	for (key in group) {
+		if (isNumeric(key)) {
+			keys.push(key);
+		}
+	}
+	for (key in group) {
+		if (isNumeric(key)) {
+			values.push(group[key]);
+		}
+	}
+	var curr          = 0;
+	var barSparse     = 10;
+	var barWidth      = (600-keys.length*barSparse)/keys.length;
+	var maxData       = group['Max'].val;
+	var horBarDist    = barWidth + barSparse;
+	var barHeight     = 600/maxData;
+	var textXOffset   = horBarDist/2;
+	var textYOffset   = 20;
+	var calledData = canvas.selectAll('rect').data(values).enter();
+
+	calledData.append('rect')
+					  .attr('x', function(d) {
+		curr++;
+		return curr*horBarDist; })
+					  .attr('y', function(d) {
+		// current value: d
+		return 600-d*barHeight;
+	}).attr('width', function(d, i) {
+		return barWidth;
+	}).attr('height', function(d, i) {
+		return d*barHeight;
+	})
+
+	curr = 0;
+	calledData.append('text')
+					  .text(function(d) {
+		return d;
+						}).attr('x', function(d) {
+		curr++;
+		return curr*horBarDist;
+						}).attr('y', textYPosition)
+							.style('text-anchor', 'end')
 };
