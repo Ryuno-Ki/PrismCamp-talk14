@@ -30,19 +30,6 @@ function handleFileSelect(e) {
 								var retw  = {};
 								for (var row = 1; row < rows.length; ++row) {
 												//handleCsvRow(rows[row]);
-												var reply2user  = rows[row][2];
-												var timestamp   = rows[row][3];
-												var retweetUser = rows[row][7];
-												if(!users[reply2user]) {
-													users[reply2user] = 1;
-												} else {
-													users[reply2user]++;
-												}
-												if(!retw[retweetUser]) {
-													retw[retweetUser] = 1;
-												} else {
-													retw[retweetUser]++;
-												}
 								}
 								delete users[""];
 								delete retw[""];
@@ -52,65 +39,87 @@ function handleFileSelect(e) {
 								var uniqueUsers = commonKeys.diff(usersKeys);
 								var uniqueRetw  = commonKeys.diff(retwKeys);
 								var abstract = document.getElementById('file-viz');
-								abstract.innerHTML = '<h5>Mit ' + usersKeys.length + ' Benutzern kommunziert, davon waren ' + uniqueUsers.length + ' einmalig.</h5>\n';
-								abstract.innerHTML += '<h5>' + retwKeys.length + ' Benutzer retweetet, davon waren ' + uniqueRetw.length + ' einmalig.</h5>\n';
-								/*
-								csv2svg(rows[1]);
-								csv2svg(rows[2]);
-								*/
+								abstract.innerHTML = '<h5>Mit ' + usersKeys.length
+																	 + ' Benutzern kommunziert, davon waren '
+																	 + uniqueUsers.length + ' einmalig.</h5>\n';
+								abstract.innerHTML += '<h5>' + retwKeys.length 
+												           + ' Benutzer retweetet, davon waren ' 
+																	 + uniqueRetw.length + ' einmalig.</h5>\n';
+								csv2svg();
 				}
 };
 
-function handleCsvHeader(csv) {
-	var table = document.getElementById('file-output');
-	var tr    = document.createElement('tr');
-	var th    = document.createElement('th');
-	var text  = document.createTextNode(csv[2]);
-	th.appendChild(text);
-	tr.appendChild(th);
-	var th    = document.createElement('th');
-	var text  = document.createTextNode(csv[3]);
-	th.appendChild(text);
-	tr.appendChild(th);
-	var th    = document.createElement('th');
-	var text  = document.createTextNode(csv[7]);
-	th.appendChild(text);
-	tr.appendChild(th);
-	table.appendChild(tr);
+function csv2svg() {
+	var width    = 500;
+	var height   = 500;
+	var treshold = 30;
+	d3.text('tweets/tweets.csv', function(raw) {
+		var data   = d3.csv.parseRows(raw);
+		var users  = [];
+		var retw   = [];
+		users['Sonstiges'] = 0;
+		retw['Sonstiges']  = 0;
+		var canvas = d3.select('#twitter-output').append('svg')
+																						 .attr('width', width)
+																						 .attr('height', height);
+		canvas.append('rect').attr('class', 'background')
+												 .attr('width', width)
+												 .attr('height', height);
+		canvas.append('g').attr('class', 'x axis');
+		canvas.append('g').attr('class', 'y axis').append('line').attr('y1','100%');
+	
+		var calledData = canvas.selectAll('rect').data(data).enter();
+		for (var row = 1; row < data.length; ++row) {
+			var reply2user  = data[row][2];
+			var timestamp   = data[row][3];
+			var retweetUser = data[row][7];
+			users = sumUpTweets(users, reply2user);
+			retw  = sumUpTweets(retw, retweetUser);
+		}
+		delete users[""];
+		delete retw[""];
+
+		users = truncateTweets(users, treshold);
+		retw = truncateTweets(retw, treshold);
+		console.log(users);
+		console.log(retw);
+		var viz = document.getElementById('file-viz');
+		viz.innerHTML = users['Max'].key + ' mit einem Wert von ' + users['Max'].val;
+		calledData.append('rect').attr('y', function(d, i) {
+			// i = line, d = data
+			var keys = Object.keys(users);
+			return 20;
+		})
+	});
 };
 
-function handleCsvRow(csv) {
-	var table = document.getElementById('file-output');
-	var tr    = document.createElement('tr');
-	var td    = document.createElement('td');
-	var text  = document.createTextNode(csv[2]);
-	td.appendChild(text);
-	tr.appendChild(td);
-	var td    = document.createElement('td');
-	var text  = document.createTextNode(csv[3]);
-	td.appendChild(text);
-	tr.appendChild(td);
-	//console.log(d3.time.format('%Y-%m-%d %X %Z').parse(csv[3]))
-	var td    = document.createElement('td');
-	var text  = document.createTextNode(csv[7]);
-	td.appendChild(text);
-	tr.appendChild(td);
-	table.appendChild(tr);
+function sumUpTweets(group, people) {
+	if(!group[people]) {
+		group[people] = 1;
+	} else {
+		group[people]++;
+	}
+	return group;
 };
 
-function csv2svg(csv) {
-	var canvas = d3.select('#twitter-input')
-								 .append('svg')
-								 .attr('width', 500)
-								 .attr('height', 500);
-	var circle = canvas.append('circle')
-										 .attr('cx', 250)
-										 .attr('cy', 10)
-										 .attr('r', 10)
-										 .attr('fill', 'red');
-	var label = canvas.append('g')
-										.style('text-anchor', 'end');
-	label.append('text')
-			 .attr('class', 'label')
-			 .text('Label');
+function truncateTweets(group, treshold) {
+	var firstKey = Object.keys(group)[0];
+	group['Max'] = {key: firstKey, val: group[firstKey]}
+	
+	for (twitterId in group) {
+		if (group[twitterId] < treshold) {
+			group['Sonstiges']++;
+			delete group[twitterId];
+			continue;
+		}
+		if (!isNumeric(twitterId) && group[twitterId] > group['Max'].val) {
+			group['Max'].key = twitterId;
+			group['Max'].val = group[twitterId];
+		}
+	}
+	return group;
+};
+
+function isNumeric(obj) {
+	return !isNaN(parseFloat(obj));
 };

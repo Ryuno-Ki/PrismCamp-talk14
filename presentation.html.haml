@@ -6,6 +6,7 @@
     %link{rel:'stylesheet',src:'impress.css'}
     :css
       body {
+        color:black;
         background-color:#D7D7D7;
         background-image:radial-gradient(#F0F0F0,#BEBEBE);
       }
@@ -70,39 +71,54 @@
       .substep.past, .substep.future {
         visibility:hidden;
       }
+
+      /* D3 */
+      rect.background {
+        fill:white;
+      }
+
+      axis.path, axis.line {
+        fill:none;
+        stroke:black;
+      }
   %body.impress-not-supported
     .fallback-message
       Leider unterstützt dein Browser nicht die von der Präsentationssoftware
       benötigten Funktionen. Bitte benutze einen modernen Browser wie Firefox,
       Chrome oder Safari. Danke.
     #impress
-      #social-graph.step.slide{data:{x:'0',y:'-1500'}}
-        %h1.upcase Social Graph
-      #first-though.step{data:{x:'1500',y:'-1500'}}
+      #social-graph.step.slide{data:{x:'0',y:'0'}}
+        %h2.upcase Social Graph
+        %h4 PrismCamp
+        %h6 am 17. & 18. Mai 2014 von @AndreJaenisch
+      #first-though.step{data:{x:'0',y:'-1500',rotate:'90'}}
         %img{src:'concept-map.jpg',alt:'Wikipedia Concept Map',width:'800px'}
-      #diaspora.step{data:{x:'1500',y:'-500'}}
+      #diaspora.step{data:{x:'1400',y:'-1500',rotate:'90'}}
         %img{src:'diaspora.png',alt:'Diaspora* Logo',width:'800px'}
-      #eh14.step{data:{x:'3000',y:'-1500'}}
+      #eh14.step{data:{x:'1400',y:'0',rotate:'180'}}
         %img{src:'eh14.svg',alt:'Logo EasterHegg 2014'}
-      #eh14-decentralisation.step{data:{x:'3000',y:'-500'}}
-        %h1 Decentralisation:
+      #eh14-decentralisation.step{data:{x:'1400',y:'1500',rotate:'180'}}
+        %h1 Decentralisation
         %h2 Broken by Design!
-      #xing-reach.step{data:{x:'4500',y:'-1500'}}
+      #xing-reach.step{data:{x:'0',y:'1500'}}
         .substep
-          %img{src:'Xing-contact-reach.png',alt:'Xing Reichweite Hintergrundbild',width:'800px'}
+          %img.centered{src:'Xing-contact-reach.png',alt:'Xing Reichweite Hintergrundbild',width:'600px'}
         .substep
-          %img{src:'Xing-contact-reach-numbers.png',alt:'Xing Reichweite konkret',width:'800px'}
-      #twitter-analytics.step{data:{x:'6000',y:'-1500'}}
-        %img{src:'Twitter-Analytics.png',alt:'Twitter-Analytics Menüpunkt'}
-        %img{src:'Twitter-Analytics-Download.png',alt:'Twitter-Analytics zum Download'}
-      #twitter-input.step{data:{x:'6000',y:'-500'}}
+          %h6
+            %a{href:'http://www.xing.com/profile/Andre_Jaenisch',target:'_blank'}Mein Xing-Profil
+          %img.centered{src:'Xing-contact-reach-numbers.png',alt:'Xing Reichweite konkret',width:'600px'}
+      #twitter-analytics.step{data:{x:'-1400',y:'1500',rotate:'90'}}
         .substep
-          %h3 Und was hat Twitter zu bieten?
-          %input#file-handler{type:'file'}
-      #twitter-output.step{data:{x:'6000',y:'500'}}
+          %img.centered{src:'Twitter-Analytics.png',alt:'Twitter-Analytics Menüpunkt'}
+        .substep
+          %img.centered{src:'Twitter-Analytics-Download.png',alt:'Twitter-Analytics zum Download'}
+      #twitter-input.step{data:{x:'-2800',y:'1500'}}
+        %h3 Und was hat Twitter nun zu bieten?
+        %input#file-handler{type:'file'}
+      #twitter-output.step{data:{x:'-2800',y:'0'}}
         %table#file-output
         #file-viz
-      #techniques.step{data:{x:'7500',y:'-1500'}}
+      #techniques.step{data:{x:'-2800',y:'-1500',rotate:'90'}}
         %h5 Benutzte Bibliotheken
         %ul
           %li
@@ -117,7 +133,7 @@
             %a{href:'https://github.com/gkindel',target:'_blank'}Greg Kindel
           %li
             %img{src:'Badges/d3.svg',alt:'D3.js'}
-      #credits.step{data:{x:'0',y:'-5000'}}
+      #credits.step{data:{x:'2800',y:'-1500',rotate:'180'}}
         %h5 Credits
         %ul
           %li
@@ -142,18 +158,21 @@
             %a{href:'https://www.flickr.com/photos/jackie_brand/11630176306/',target:'_blank'}Cheers!
             von
             %a{href:'https://secure.flickr.com/photos/jackie_brand/',target:'_blank'}Jeremy Meredith
-      #cheers.step
+      #cheers.step{data:{x:'2800',y:'0',rotate:'270'}}
         %h4 BarTaz meint, wer seine Software nutzt, dem gibt er einen aus.
         %img{src:'cheers.jpg',alt:'Prost!',width:'300px',style:'display:block;float:left;margin-top:-14rem;'}
         %h5 In diesem Sinne: Cheers!
-      #github.step{data:{x:'10000',y:'-1500'}}
-        %h5
+      #github.step{data:{x:'2800',y:'1500'}}
+        %h6
           %img{src:'GitHub-Mark/PNG/GitHub-Mark-64px.png',alt:'Code auf GitHub'}
           %a{href:'https://github.com/Ryuno-Ki/PrismCamp-talk14.git',target:'_blank'}
             https://github.com/<br />
             Ryuno-Ki/PrismCamp-talk14.git
         %img.centered{src:'PrismCamp-Talk.png',alt:'https://github.com/Ryuno-Ki/PrismCamp-talk14.git',width:'400px'}
-      #overview.step
+        %h6
+          %a{href:'https://firefoxosundich.wordpress.com',target:'_blank'}Firefox OS und Ich Blog
+      #overview.step{data:{x:'0',y:'0',scale:'6'}}
+      // http://mako.cc/copyrighteous/google-has-most-of-my-email-because-it-has-all-of-yours
     %script{src:'csv.js'}
     %script{src:'d3.min.js'}
     %script{src:'impress.js'}

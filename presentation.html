@@ -6,6 +6,7 @@
     <link rel='stylesheet' src='impress.css'>
     <style>
       body {
+        color:black;
         background-color:#D7D7D7;
         background-image:radial-gradient(#F0F0F0,#BEBEBE);
       }
@@ -70,6 +71,16 @@
       .substep.past, .substep.future {
         visibility:hidden;
       }
+      
+      /* D3 */
+      rect.background {
+        fill:white;
+      }
+      
+      axis.path, axis.line {
+        fill:none;
+        stroke:black;
+      }
     </style>
   </head>
   <body class='impress-not-supported'>
@@ -79,45 +90,52 @@
       Chrome oder Safari. Danke.
     </div>
     <div id='impress'>
-      <div class='step slide' data-x='0' data-y='-1500' id='social-graph'>
-        <h1 class='upcase'>Social Graph</h1>
+      <div class='step slide' data-x='0' data-y='0' id='social-graph'>
+        <h2 class='upcase'>Social Graph</h2>
+        <h4>PrismCamp</h4>
+        <h6>am 17. & 18. Mai 2014 von @AndreJaenisch</h6>
       </div>
-      <div class='step' data-x='1500' data-y='-1500' id='first-though'>
+      <div class='step' data-rotate='90' data-x='0' data-y='-1500' id='first-though'>
         <img alt='Wikipedia Concept Map' src='concept-map.jpg' width='800px'>
       </div>
-      <div class='step' data-x='1500' data-y='-500' id='diaspora'>
+      <div class='step' data-rotate='90' data-x='1400' data-y='-1500' id='diaspora'>
         <img alt='Diaspora* Logo' src='diaspora.png' width='800px'>
       </div>
-      <div class='step' data-x='3000' data-y='-1500' id='eh14'>
+      <div class='step' data-rotate='180' data-x='1400' data-y='0' id='eh14'>
         <img alt='Logo EasterHegg 2014' src='eh14.svg'>
       </div>
-      <div class='step' data-x='3000' data-y='-500' id='eh14-decentralisation'>
-        <h1>Decentralisation:</h1>
+      <div class='step' data-rotate='180' data-x='1400' data-y='1500' id='eh14-decentralisation'>
+        <h1>Decentralisation</h1>
         <h2>Broken by Design!</h2>
       </div>
-      <div class='step' data-x='4500' data-y='-1500' id='xing-reach'>
+      <div class='step' data-x='0' data-y='1500' id='xing-reach'>
         <div class='substep'>
-          <img alt='Xing Reichweite Hintergrundbild' src='Xing-contact-reach.png' width='800px'>
+          <img alt='Xing Reichweite Hintergrundbild' class='centered' src='Xing-contact-reach.png' width='600px'>
         </div>
         <div class='substep'>
-          <img alt='Xing Reichweite konkret' src='Xing-contact-reach-numbers.png' width='800px'>
+          <h6>
+            <a href='http://www.xing.com/profile/Andre_Jaenisch' target='_blank'>Mein Xing-Profil</a>
+          </h6>
+          <img alt='Xing Reichweite konkret' class='centered' src='Xing-contact-reach-numbers.png' width='600px'>
         </div>
       </div>
-      <div class='step' data-x='6000' data-y='-1500' id='twitter-analytics'>
-        <img alt='Twitter-Analytics Menüpunkt' src='Twitter-Analytics.png'>
-        <img alt='Twitter-Analytics zum Download' src='Twitter-Analytics-Download.png'>
-      </div>
-      <div class='step' data-x='6000' data-y='-500' id='twitter-input'>
+      <div class='step' data-rotate='90' data-x='-1400' data-y='1500' id='twitter-analytics'>
         <div class='substep'>
-          <h3>Und was hat Twitter zu bieten?</h3>
-          <input id='file-handler' type='file'>
+          <img alt='Twitter-Analytics Menüpunkt' class='centered' src='Twitter-Analytics.png'>
+        </div>
+        <div class='substep'>
+          <img alt='Twitter-Analytics zum Download' class='centered' src='Twitter-Analytics-Download.png'>
         </div>
       </div>
-      <div class='step' data-x='6000' data-y='500' id='twitter-output'>
+      <div class='step' data-x='-2800' data-y='1500' id='twitter-input'>
+        <h3>Und was hat Twitter nun zu bieten?</h3>
+        <input id='file-handler' type='file'>
+      </div>
+      <div class='step' data-x='-2800' data-y='0' id='twitter-output'>
         <table id='file-output'></table>
         <div id='file-viz'></div>
       </div>
-      <div class='step' data-x='7500' data-y='-1500' id='techniques'>
+      <div class='step' data-rotate='90' data-x='-2800' data-y='-1500' id='techniques'>
         <h5>Benutzte Bibliotheken</h5>
         <ul>
           <li>
@@ -138,7 +156,7 @@
           </li>
         </ul>
       </div>
-      <div class='step' data-x='0' data-y='-5000' id='credits'>
+      <div class='step' data-rotate='180' data-x='2800' data-y='-1500' id='credits'>
         <h5>Credits</h5>
         <ul>
           <li>
@@ -171,22 +189,26 @@
           </li>
         </ul>
       </div>
-      <div class='step' id='cheers'>
+      <div class='step' data-rotate='270' data-x='2800' data-y='0' id='cheers'>
         <h4>BarTaz meint, wer seine Software nutzt, dem gibt er einen aus.</h4>
         <img alt='Prost!' src='cheers.jpg' style='display:block;float:left;margin-top:-14rem;' width='300px'>
         <h5>In diesem Sinne: Cheers!</h5>
       </div>
-      <div class='step' data-x='10000' data-y='-1500' id='github'>
-        <h5>
+      <div class='step' data-x='2800' data-y='1500' id='github'>
+        <h6>
           <img alt='Code auf GitHub' src='GitHub-Mark/PNG/GitHub-Mark-64px.png'>
           <a href='https://github.com/Ryuno-Ki/PrismCamp-talk14.git' target='_blank'>
             https://github.com/<br />
             Ryuno-Ki/PrismCamp-talk14.git
           </a>
-        </h5>
+        </h6>
         <img alt='https://github.com/Ryuno-Ki/PrismCamp-talk14.git' class='centered' src='PrismCamp-Talk.png' width='400px'>
+        <h6>
+          <a href='https://firefoxosundich.wordpress.com' target='_blank'>Firefox OS und Ich Blog</a>
+        </h6>
       </div>
-      <div class='step' id='overview'></div>
+      <div class='step' data-scale='6' data-x='0' data-y='0' id='overview'></div>
+      <!-- / http://mako.cc/copyrighteous/google-has-most-of-my-email-because-it-has-all-of-yours -->
     </div>
     <script src='csv.js'></script>
     <script src='d3.min.js'></script>
